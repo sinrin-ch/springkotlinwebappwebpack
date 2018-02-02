@@ -4,22 +4,21 @@ import xyz.sinrin.demo.config.AppConfig
 import xyz.sinrin.demo.dao.TestDAO
 import xyz.sinrin.demo.entity.TestBean
 import java.util.ArrayList
+import java.util.function.Consumer
 
 class TestDAO2Test {
 
     @Test
-    fun saveListTest() {
+    fun testDAO() {
         val context = AnnotationConfigApplicationContext(AppConfig::class.java)
-        val dao: TestDAO = context.getBean(TestDAO::class.java)
-
-        val list = ArrayList<TestBean>()
-        for (i in 21..30) {
-            val bean = TestBean()
-            bean.ba = "666" + i
-            bean.ta = "777" + i
-            list.add(bean)
-        }
-
-        dao.saveList(list)
+        val dao = context.getBean(TestDAO::class.java)
+//        dao.all.forEach(Consumer<TestBean> { println(it) })
+//        dao.all.forEach { println(it) }
+        val list: List<TestBean> = dao.all
+//        list.filter { it.ba?.endsWith("0")?:false }.forEach { println(it) }
+        list.lastOrNull { it.ba?.endsWith("2")?:false  }?.let { println(it.ba) }
+//        list.map { it.ba }.forEach { it?.let { println(it.length) } }  // 如果是null,不执行后面的println
+//        var str:String? = null;
+//        str?.let { println(it.length) }
     }
 }
